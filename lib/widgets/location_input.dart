@@ -15,14 +15,19 @@ class _LocationInputState extends State<LocationInput> {
   String? _previewImageUrl;
 
   Future<void> _getCurrentUserLocation() async {
-    final locData = await Location().getLocation();
-    final staticMapUrl = LocationHelper.generateLocatonPreviewImage(
-        locData.latitude!, locData.longitude!);
+    try {
+      final locData = await Location().getLocation();
+      final staticMapUrl = LocationHelper.generateLocatonPreviewImage(
+          locData.latitude!, locData.longitude!);
 
-    widget.onSelectPlace(locData.latitude, locData.longitude);
-    setState(() {
-      _previewImageUrl = staticMapUrl;
-    });
+      widget.onSelectPlace(locData.latitude, locData.longitude);
+      setState(() {
+        _previewImageUrl = staticMapUrl;
+      });
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Failed to load current location")));
+    }
   }
 
   @override
