@@ -51,6 +51,8 @@ class PlacesScreen extends StatelessWidget {
                     : ListView.builder(
                         itemBuilder: (ctx, i) => ListTile(
                           title: Text(greatPlaces.items[i].title),
+                          subtitle:
+                              Text(greatPlaces.items[i].location!.address!),
                           leading: CircleAvatar(
                             backgroundImage:
                                 FileImage(greatPlaces.items[i].image),
